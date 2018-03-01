@@ -157,6 +157,19 @@ class CartItem implements Arrayable, Jsonable
     {
         return $this->numberFormat($this->total, $decimals, $decimalPoint, $thousandSeperator);
     }
+	
+	/**
+     * Returns the formatted shipping.
+     *
+     * @param int    $decimals
+     * @param string $decimalPoint
+     * @param string $thousandSeperator
+     * @return string
+     */
+    public function shipping($decimals = null, $decimalPoint = null, $thousandSeperator = null)
+    {
+        return $this->numberFormat($this->shipping, $decimals, $decimalPoint, $thousandSeperator);
+    }
 
     /**
      * Returns the formatted tax.
@@ -255,6 +268,18 @@ class CartItem implements Arrayable, Jsonable
         
         return $this;
     }
+	
+    /**
+     * Set the shipping.
+     *
+     * @param int|float $shipping
+     * @return \Gloudemans\Shoppingcart\CartItem
+     */
+    public function setShipping($shipping)
+    {
+        $this->shipping = $shipping;
+        return $this;
+    }
 
     /**
      * Get an attribute from the cart item or get the associated model.
@@ -282,6 +307,10 @@ class CartItem implements Arrayable, Jsonable
 
         if($attribute === 'tax') {
             return $this->price * ($this->taxRate / 100);
+        }
+		
+		if($attribute === 'shipping') {
+            return $this->shipping;
         }
         
         if($attribute === 'taxTotal') {
