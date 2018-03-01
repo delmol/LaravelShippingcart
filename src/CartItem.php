@@ -317,7 +317,7 @@ class CartItem implements Arrayable, Jsonable
     {
         $options = array_get($attributes, 'options', []);
 
-        return new self($attributes['id'], $attributes['name'], $attributes['price'], $options);
+        return new self($attributes['id'], $attributes['name'], $attributes['price'], $attributes['shipping'], $options);
     }
 
     /**
