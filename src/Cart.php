@@ -296,7 +296,7 @@ class Cart
         $content = $this->getContent();
         $shipping = $content->reduce(
             function ($shipping, CartItem $cartItem) {
-                return $shipping;
+                return $shipping + $cartItem->shipping;
             }, 0);
         return $this->numberFormat($shipping, $decimals, $decimalPoint, $thousandSeperator);
     }
