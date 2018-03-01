@@ -501,9 +501,6 @@ class Cart
         }
 
         $cartItem->setTaxRate(config('cart.tax'));
-		$cartItem->setShipping(config('cart.shipping'));
-		
-        $this->shipping();
 
         return $cartItem;
     }
