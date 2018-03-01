@@ -283,6 +283,25 @@ class Cart
         return $this->numberFormat($subTotal, $decimals, $decimalPoint, $thousandSeperator);
     }
 
+	/**
+     * Get the shipping costs.
+     *
+     * @param int    $decimals
+     * @param string $decimalPoint
+     * @param string $thousandSeperator
+     * @return float
+     */
+    public function shipping($decimals = null, $decimalPoint = null, $thousandSeperator = null)
+    {
+        $content = $this->getContent();
+        $shipping = $content->reduce(
+            function ($shipping, CartItem $cartItem) {
+                return $shipping;
+            }, 0);
+        return $this->numberFormat($shipping, $decimals, $decimalPoint, $thousandSeperator);
+    }
+	
+	
     /**
      * Search the cart content for a cart item matching the given search closure.
      *
@@ -340,6 +359,23 @@ class Cart
         $this->session->put($this->instance, $content);
     }
 
+	/**
+     * Set the shipping for the cart item with the given rowId.
+     *
+     * @param string    $rowId
+     * @param int|float $shipping
+     * @return void
+     */
+    public function setShipping($rowId, $shipping)
+    {
+        $cartItem = $this->get($rowId);
+        $cartItem->setShipping($shipping);
+        $content = $this->getContent();
+        $content->put($cartItem->rowId, $cartItem);
+        $this->session->put($this->instance, $content);
+    }
+	
+	
     /**
      * Store an the current instance of the cart.
      *
@@ -401,7 +437,7 @@ class Cart
     }
 
     /**
-     * Magic method to make accessing the total, tax and subtotal properties possible.
+     * Magic method to make accessing the total, tax, shipping and subtotal properties possible.
      *
      * @param string $attribute
      * @return float|null
@@ -418,6 +454,9 @@ class Cart
 
         if($attribute === 'subtotal') {
             return $this->subtotal();
+        }
+		if($attribute === 'shipping') {
+            return $this->shipping();
         }
 
         return null;
@@ -462,6 +501,9 @@ class Cart
         }
 
         $cartItem->setTaxRate(config('cart.tax'));
+		$cartItem->setShipping(config('cart.shipping'));
+		
+        $this->shipping();
 
         return $cartItem;
     }
