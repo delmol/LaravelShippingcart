@@ -81,7 +81,7 @@ class CartItem implements Arrayable, Jsonable
 	 * @param float      $shipping
      * @param array      $options
      */
-    public function __construct($id, $name, $price, $shipping array $options = [])
+    public function __construct($id, $name, $price, $shipping, array $options = [])
     {
         if(empty($id)) {
             throw new \InvalidArgumentException('Please supply a valid identifier.');
