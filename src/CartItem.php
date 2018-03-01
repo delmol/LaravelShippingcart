@@ -78,9 +78,10 @@ class CartItem implements Arrayable, Jsonable
      * @param int|string $id
      * @param string     $name
      * @param float      $price
+	 * @param float      $shipping
      * @param array      $options
      */
-    public function __construct($id, $name, $price, array $options = [])
+    public function __construct($id, $name, $price, $shipping array $options = [])
     {
         if(empty($id)) {
             throw new \InvalidArgumentException('Please supply a valid identifier.');
@@ -91,10 +92,14 @@ class CartItem implements Arrayable, Jsonable
         if(strlen($price) < 0 || ! is_numeric($price)) {
             throw new \InvalidArgumentException('Please supply a valid price.');
         }
+		if(empty($shipping) {
+			$shipping = 0;
+		}
 
         $this->id       = $id;
         $this->name     = $name;
         $this->price    = floatval($price);
+		$this->shipping    = floatval($shipping);
         $this->options  = new CartItemOptions($options);
         $this->rowId = $this->generateRowId($id, $options);
     }
