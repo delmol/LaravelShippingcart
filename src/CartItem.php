@@ -48,7 +48,7 @@ class CartItem implements Arrayable, Jsonable
      *
      * @var float
      */
-    public $price;
+    public $shipping;
 
 
     /**
@@ -92,7 +92,7 @@ class CartItem implements Arrayable, Jsonable
         if(strlen($price) < 0 || ! is_numeric($price)) {
             throw new \InvalidArgumentException('Please supply a valid price.');
         }
-		if(empty($shipping) {
+		if(empty($shipping)) {
 			$shipping = 0;
 		}
 
