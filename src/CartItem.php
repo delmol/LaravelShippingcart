@@ -329,9 +329,9 @@ class CartItem implements Arrayable, Jsonable
      * @param array      $options
      * @return \Gloudemans\Shoppingcart\CartItem
      */
-    public static function fromAttributes($id, $name, $price, array $options = [])
+    public static function fromAttributes($id, $name, $price, $shipping, array $options = [])
     {
-        return new self($id, $name, $price, $options);
+        return new self($id, $name, $price, $shipping, $options);
     }
 
     /**
